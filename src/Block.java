@@ -6,6 +6,7 @@ public class Block {
     private int myCol;
     private int myHeight;
     private int myWidth;
+    private String name;
 
    
     public Block (String s) {
@@ -18,11 +19,16 @@ public class Block {
                     throw new IllegalArgumentException("Invalid number of arguments: " +
                                     "Board construction requires FOUR integers to be passed in");
             }
+            name=s;
             myRow = Integer.parseInt(corners[0]);
             myCol = Integer.parseInt(corners[1]);
             myHeight = Integer.parseInt(corners[2]) - myRow;
             myWidth = Integer.parseInt(corners[3]) - myCol;
 
+    }
+    
+    public Block copy(Block b){
+    	return new Block(this.name);
     }
    
     public void setRow(int newRow){

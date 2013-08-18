@@ -43,15 +43,15 @@ public class Tray implements Comparable<Tray> {
         }return newSpace;
 }
 
-	public LinkedList<Tray> generateMoves () {
+	public ArrayList<Tray> generateMoves () {
 		// When called on a tray, generates a Linked List structure with every possible tray
 		// configuration that could result from moving a block.
-		LinkedList<Tray> possibleTrays = new LinkedList<Tray>();
+		ArrayList<Tray> possibleTrays = new ArrayList<Tray>();
 
 		for (int j = 0; j < this.getBlocks().size(); j++) {
 			Block currBlock=this.getBlocks().get(j);
-			Block copyblock=currBlock;
-			ArrayList<Block> copy = getBlocks();
+			Block copyblock=currBlock.copy(currBlock);
+			ArrayList<Block> copy = this.copyBlocks();
 			boolean canUp = true;
 			boolean canDown = true;
 			boolean canLeft = true;
@@ -66,14 +66,14 @@ public class Tray implements Comparable<Tray> {
 				}
 				if (canUp) {
 					// Generate move here.
-					copy.remove(currBlock);
+					copy.remove(copyblock);
 					copyblock.setRow(copyblock.getRow()-1);
 					copy.add(copyblock);
 					possibleTrays.add(new Tray(myHeight,myWidth,copy));
 				}
 			}
-			copyblock=currBlock;
-			copy = getBlocks();
+			copyblock=currBlock.copy(currBlock);
+			copy = this.copyBlocks();
 			
 			// If this block can move down, generate the move and add it to the LinkedList.
 			if (currBlock.getRow() + currBlock.getHeight() < this.getHeight()) {
@@ -84,14 +84,14 @@ public class Tray implements Comparable<Tray> {
 				}
 				if (canDown) {
 					// Generate move here.
-					copy.remove(currBlock);
+					copy.remove(copyblock);
 					copyblock.setRow(copyblock.getRow()+1);
 					copy.add(copyblock);
 					possibleTrays.add(new Tray(myHeight,myWidth,copy));
 				}
 			}
-			copyblock=currBlock;
-			copy = getBlocks();
+			copyblock=currBlock.copy(currBlock);
+			copy = this.copyBlocks();
 			// If this block can move left, generate the move and add it to the LinkedList.
 			if (currBlock.getCol() != 0) {
 				for (int i = currBlock.getRow(); i < currBlock.getRow() + currBlock.getHeight(); i++) {
@@ -101,14 +101,14 @@ public class Tray implements Comparable<Tray> {
 				}
 				if (canLeft) {
 					// Generate move here.
-					copy.remove(currBlock);
+					copy.remove(copyblock);
 					copyblock.setCol(copyblock.getCol()-1);
 					copy.add(copyblock);
 					possibleTrays.add(new Tray(myHeight,myWidth,copy));
 				}
 			}
-			copyblock=currBlock;
-			copy = getBlocks();
+			copyblock=currBlock.copy(currBlock);
+			copy = this.copyBlocks();
 			// If this block can move right, generate the move and add it to the LinkedList.
 			if (currBlock.getCol() + currBlock.getWidth() < this.getWidth()) {
 				for (int i = currBlock.getRow(); i < currBlock.getRow() + currBlock.getHeight(); i++) {
@@ -118,7 +118,7 @@ public class Tray implements Comparable<Tray> {
 						}
 				if (canRight) {
 					// Generate move here.
-					copy.remove(currBlock);
+					copy.remove(copyblock);
 					copyblock.setCol(copyblock.getCol()+1);
 					copy.add(copyblock);
 					possibleTrays.add(new Tray(myHeight,myWidth,copy));
@@ -133,6 +133,13 @@ public class Tray implements Comparable<Tray> {
 		return this.myBlocks;
 	}
 
+	public ArrayList<Block> copyBlocks(){
+		ArrayList<Block> copyList = new ArrayList<Block>(this.myBlocks.size());
+		for (Block b: myBlocks) {
+		  copyList.add(b);
+		}
+	return copyList;
+	}
 	public boolean[][] getSpace () {
 		// Returns the two-dimensional boolean representation of the board.
 		// All spaces filled in are marked as true.
@@ -232,20 +239,24 @@ public class Tray implements Comparable<Tray> {
     }
     
     
-    public boolean equals(Object obj){
-        // Override object equals method by checking if Strings are the same
-        // Every Tray + block configuration should be different if valid Tray
-        for (int i = 0; i < this.myBlocks.size(); i++) {
-                if (!((Tray)obj).myBlocks.get(i).equals(this.myBlocks.get(i))) {
-                        return false;
-                }
-        }
-        return true;
+ 
+        public boolean equals(Object obj){
+            // Override object equals method by checking if Strings are the same
+            // Every Tray + block configuration should be different if valid Tray
+            for (int i = 0; i < this.myBlocks.size(); i++) {
+                    if (!((Tray)obj).myBlocks.get(i).equals(this.myBlocks.get(i))) {
+                            return false;
+                    }
+            }
+            return true;
     }
     
     public int hashCode(){
     	// Override object hash code with hash code of toString.
-    	return this.toString().hashCode();
+    	String a=this.toString();
+    	int b=a.hashCode();
+    	return b;
+    	
     }
 
 }

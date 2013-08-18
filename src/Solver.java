@@ -97,10 +97,13 @@ public class Solver {
 	}
 
 	public void makeMove() {
+		while (!isDone){
 		Tray popped = fringe.poll();
+		if (popped == null) {
+        	System.out.println(" ERROR");
+        }
 		// Checks if the popped board is complete.
 		if (isDone(popped, this.myGoal)) {
-			System.out.println("1");
 			isDone = true;
 		}
 		if (!isDone) {
@@ -113,7 +116,7 @@ public class Solver {
 			System.out.println("2");
 			// Generate all possible moves, assign scores, and add them to the
 			// queue.
-			LinkedList<Tray> generatedMoves = popped.generateMoves();
+			ArrayList<Tray> generatedMoves = popped.generateMoves();
 			for (int i = 0; i < generatedMoves.size(); i++) {
 				Tray currentTray = generatedMoves.get(i);
 				currentTray.myScore = currentTray.score(
@@ -121,11 +124,8 @@ public class Solver {
 				fringe.add(currentTray);
 			}
 		}
-	}
+	}}
 
-	public boolean equals(Object obj){
-		return true;
-	}
 	
 	public boolean isDone(Tray check, Tray goal) {
 		for (int i=0;i<goal.getBlocks().size();i++) {
@@ -136,11 +136,7 @@ public class Solver {
 		return true;
 	}
 
-    public int hashCode(){
-    	// Override object hash code with hash code of toString.
-    	return myStart.toString().hashCode();
-    }
-	
+
 	
 	public static void main(String[] args) {
 
