@@ -32,7 +32,7 @@ public class Tray implements Comparable<Tray> {
 	}
 	
     public boolean[][] addBlock (ArrayList<Block> list) {
-        boolean[][] newSpace = new boolean[this.myHeight][this.myWidth];
+        boolean[][] newSpace = new boolean[myWidth][myHeight];
         for (int i = 0; i < list.size(); i++) {
                 Block x = list.get(i);
                 for (int j = x.getRow(); j < x.getRow() + x.getHeight(); j++) {
@@ -69,7 +69,7 @@ public class Tray implements Comparable<Tray> {
 					copy.remove(copyblock);
 					copyblock.setRow(copyblock.getRow()-1);
 					copy.add(copyblock);
-					possibleTrays.add(new Tray(myHeight,myWidth,copy));
+					possibleTrays.add(new Tray(myWidth,myHeight,copy));
 				}
 			}
 			copyblock=currBlock.copy(currBlock);
@@ -87,7 +87,7 @@ public class Tray implements Comparable<Tray> {
 					copy.remove(copyblock);
 					copyblock.setRow(copyblock.getRow()+1);
 					copy.add(copyblock);
-					possibleTrays.add(new Tray(myHeight,myWidth,copy));
+					possibleTrays.add(new Tray(myWidth,myHeight,copy));
 				}
 			}
 			copyblock=currBlock.copy(currBlock);
@@ -104,7 +104,7 @@ public class Tray implements Comparable<Tray> {
 					copy.remove(copyblock);
 					copyblock.setCol(copyblock.getCol()-1);
 					copy.add(copyblock);
-					possibleTrays.add(new Tray(myHeight,myWidth,copy));
+					possibleTrays.add(new Tray(myWidth,myHeight,copy));
 				}
 			}
 			copyblock=currBlock.copy(currBlock);
@@ -121,7 +121,7 @@ public class Tray implements Comparable<Tray> {
 					copy.remove(copyblock);
 					copyblock.setCol(copyblock.getCol()+1);
 					copy.add(copyblock);
-					possibleTrays.add(new Tray(myHeight,myWidth,copy));
+					possibleTrays.add(new Tray(myWidth,myHeight,copy));
 				}
 			}			
 		}
@@ -200,7 +200,7 @@ public class Tray implements Comparable<Tray> {
 		ArrayList<Integer> blockUsed = new ArrayList<Integer>();
 
 		for (int i = 0; i < goal.size(); i++) {
-			scores[i] = 0;
+			scores[i] = 5000;
 			int goalwidth = goal.get(i).getWidth();
 			int goalheight = goal.get(i).getHeight();
 			for (int j = 0; j < current.size(); j++) {
