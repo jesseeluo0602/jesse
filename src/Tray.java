@@ -133,12 +133,14 @@ public class Tray implements Comparable<Tray> {
 		return this.myBlocks;
 	}
 
+
 	public ArrayList<Block> copyBlocks(){
 		ArrayList<Block> copyList = new ArrayList<Block>(this.myBlocks.size());
 		for (Block b: myBlocks) {
-		  copyList.add(b);
-		}
-	return copyList;
+			Block newBlock = b.copy(b);
+				  copyList.add(newBlock);
+				}
+		return copyList;
 	}
 	public boolean[][] getSpace () {
 		// Returns the two-dimensional boolean representation of the board.

@@ -16,6 +16,7 @@ public class Solver {
 	private int numberofMoves = 0;
 	private boolean runtime = false;
 	private boolean isDone = false;
+	public int testing;
 
 	PriorityQueue<Tray> fringe;
 	HashSet<Tray> previousConfigs;
@@ -86,6 +87,7 @@ public class Solver {
 
 	public Solver(Tray start, Tray end) {
 		// Solver object withOUT a debugging argument passed in.
+		testing=0;
 		this.debugOption = null;
 		this.myStart = start;
 		this.myGoal = end;
@@ -99,17 +101,18 @@ public class Solver {
 	public void makeMove() {
 		while (!isDone){
 		Tray popped = fringe.poll();
-		if (popped == null) {
-        	System.out.println(" ERROR");
-        }
+
 		// Checks if the popped board is complete.
 		if (isDone(popped, this.myGoal)) {
-			isDone = true;
+			setisDone(true);
 		}
 		if (!isDone) {
 			// If the Tray has already been visited, ignore it and try again.
 			while (previousConfigs.contains(popped)) {
 				popped = fringe.poll();
+				if (popped == null) {
+		        	System.out.println(" ERROR");
+		        }
 			}
 			// Once a new tray is found, add it to the previous configurations.
 			previousConfigs.add(popped);
@@ -118,9 +121,11 @@ public class Solver {
 			// queue.
 			ArrayList<Tray> generatedMoves = popped.generateMoves();
 			for (int i = 0; i < generatedMoves.size(); i++) {
+				testing=testing+1;
 				Tray currentTray = generatedMoves.get(i);
 				currentTray.myScore = currentTray.score(
 						currentTray.getBlocks(), myGoal.getBlocks());
+				System.out.println(testing);
 				fringe.add(currentTray);
 			}
 		}
@@ -137,6 +142,9 @@ public class Solver {
 	}
 
 
+	public void setisDone(boolean t){
+		isDone=t;
+	}
 	
 	public static void main(String[] args) {
 
