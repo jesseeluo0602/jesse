@@ -97,12 +97,10 @@ public class Solver {
 	}
 
 	public void makeMove() {
-		if (myStart.getBlocks() == myGoal.getBlocks()) {
-			isDone = true;
-		}
 		Tray popped = fringe.poll();
 		// Checks if the popped board is complete.
 		if (isDone(popped, this.myGoal)) {
+			System.out.println("1");
 			isDone = true;
 		}
 		if (!isDone) {

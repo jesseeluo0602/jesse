@@ -6,7 +6,7 @@ public class Block {
     private int myCol;
     private int myHeight;
     private int myWidth;
-    private String name;
+
    
     public Block (String s) {
             // Block constructor. Takes in a Block object given the text file line input.
@@ -22,7 +22,7 @@ public class Block {
             myCol = Integer.parseInt(corners[1]);
             myHeight = Integer.parseInt(corners[2]) - myRow;
             myWidth = Integer.parseInt(corners[3]) - myCol;
-            name=myRow+" "+myCol+" "+Integer.parseInt(corners[2])+" "+Integer.parseInt(corners[3]);
+
     }
    
     public void setRow(int newRow){
@@ -54,12 +54,13 @@ public class Block {
             return this.myWidth;
     }
     
-    public String getName(){
-    	return this.name;
-    }
+
     
-    public boolean equals(Object obj){
-    	return (this.name==((Block)obj).name);
-    			
-    }
+	public String toString() {
+		return "" + myCol + " " + myRow +" " + myHeight+ " " + myWidth;
+	}
+	
+    public boolean equals (Object other) {
+		return myRow == ((Block) other).myRow && myCol == ((Block) other).myCol && myHeight == ((Block) other).myHeight && myWidth == ((Block) other).myWidth;
+	}
 }

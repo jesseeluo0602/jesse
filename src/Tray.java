@@ -23,7 +23,7 @@ public class Tray implements Comparable<Tray> {
 	}
 	
 	
-	private Tray (int columns,int rows, ArrayList<Block> copy) {
+	public Tray (int columns,int rows, ArrayList<Block> copy) {
 		myHeight = rows;
 		myWidth = columns;
 		myBlocks = copy;
@@ -85,7 +85,7 @@ public class Tray implements Comparable<Tray> {
 				if (canDown) {
 					// Generate move here.
 					copy.remove(currBlock);
-					copyblock.setRow(copyblock.getRow()+11);
+					copyblock.setRow(copyblock.getRow()+1);
 					copy.add(copyblock);
 					possibleTrays.add(new Tray(myHeight,myWidth,copy));
 				}
@@ -231,10 +231,16 @@ public class Tray implements Comparable<Tray> {
         return string;
     }
     
+    
     public boolean equals(Object obj){
         // Override object equals method by checking if Strings are the same
         // Every Tray + block configuration should be different if valid Tray
-        return this.myBlocks.toString() == ((Tray)obj).myBlocks.toString();
+        for (int i = 0; i < this.myBlocks.size(); i++) {
+                if (!((Tray)obj).myBlocks.get(i).equals(this.myBlocks.get(i))) {
+                        return false;
+                }
+        }
+        return true;
     }
     
     public int hashCode(){
